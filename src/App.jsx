@@ -5,6 +5,7 @@ import Login from "./components/pages/Login.jsx";
 import Dashboard from "./components/pages/Dashboard.jsx";
 import NotFound from "./components/pages/NotFound.jsx";
 import Nav from "./components/UI/Nav.jsx";
+import Exam from "./components/pages/Exam/Exam.jsx";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="exam" element={<Exam />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
