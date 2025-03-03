@@ -7,24 +7,21 @@ const Home = () => {
     <div className="home-container">
       <div className="card-container">
         <div className="card">
-          <h3>Card 1</h3>
-          <p>This is card 1 description</p>
-          <Link to="/card1" className="card-link">
-            Go to Card 1
+          <h3>Synaga başla</h3>
+          <Link to="/exam" className="card-link">
+            Let's GO
           </Link>
         </div>
         <div className="card">
-          <h3>Card 2</h3>
-          <p>This is card 2 description</p>
-          <Link to="/card2" className="card-link">
-            Go to Card 2
+          <h3>Indiwidual synaga başla</h3>
+          <Link to="/i-exam" className="card-link">
+            Let's GO
           </Link>
         </div>
         <div className="card">
-          <h3>Card 3</h3>
-          <p>This is card 3 description</p>
-          <Link to="/card3" className="card-link">
-            Go to Card 3
+          <h3>Okuwçy netijeleri</h3>
+          <Link to="/results" className="card-link">
+            Let's GO
           </Link>
         </div>
       </div>
