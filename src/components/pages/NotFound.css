@@ -1,0 +1,51 @@
+/* NotFound.css */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f8f8;
+  text-align: center;
+  color: #333;
+  font-family: "Arial", sans-serif;
+}
+
+.error-code {
+  font-size: 120px;
+  font-weight: bold;
+  color: #ff6347;
+  margin: 0;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.error-message {
+  font-size: 24px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.back-home {
+  margin-top: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #007bff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-home:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

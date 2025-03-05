@@ -6,6 +6,7 @@ import Dashboard from "./components/pages/Dashboard.jsx";
 import NotFound from "./components/pages/NotFound.jsx";
 import Nav from "./components/UI/Nav.jsx";
 import Exam from "./components/pages/Exam/Exam.jsx";
+import About from "./components/pages/About/About.jsx";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="exam" element={<Exam />} />
+          <Route path="about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
