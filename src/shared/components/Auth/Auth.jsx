@@ -1,17 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 import "../../../index.css";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from context
 
   const handleToggle = () => {
     setIsSignUp((prev) => !prev);
+    setError("");
+    setSuccessMessage("");
+  };
+
+  const sendData = async () => {
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    const confirmPassword = confirmPasswordRef.current?.value;
+
+    if (isSignUp && password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    setError("");
+    setSuccessMessage("");
+
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/users/${!isSignUp ? "login/" : "signup/"}`,
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      console.log("Server response:", response.data);
+
+      setSuccessMessage(`${isSignUp ? "Signup" : "Login"} successful!`);
+      login(); // Call the login function from context
+
+      setTimeout(() => {
+        navigate("/"); // Redirect to home after 2 seconds
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+      if (error.response && error.response.data) {
+        setError(
+          error.response.data.message ||
+            "Something went wrong. Please try again."
+        );
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    sendData();
   };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="w-full min-h-screen flex items-center p-2.5 justify-center bg-gray-100">
       <AnimatePresence mode="wait">
         <motion.div
           key={isSignUp ? "signup" : "login"}
@@ -25,7 +86,7 @@ const Auth = () => {
             {isSignUp ? "Sign Up" : "Login"}
           </h2>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={submitHandler}>
             <div>
               <TextField
                 id="outlined-email"
@@ -34,6 +95,7 @@ const Auth = () => {
                 variant="outlined"
                 fullWidth
                 className="mb-4"
+                inputRef={emailRef}
               />
             </div>
             <div>
@@ -45,6 +107,7 @@ const Auth = () => {
                 variant="outlined"
                 fullWidth
                 className="mb-4"
+                inputRef={passwordRef}
               />
             </div>
 
@@ -63,8 +126,19 @@ const Auth = () => {
                   variant="outlined"
                   fullWidth
                   className="mb-4"
+                  inputRef={confirmPasswordRef}
                 />
               </motion.div>
+            )}
+
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
+
+            {successMessage && (
+              <p className="text-green-500 text-sm text-center">
+                {successMessage}
+              </p>
             )}
 
             <Button
@@ -72,6 +146,7 @@ const Auth = () => {
               color="secondary"
               fullWidth
               className="py-3"
+              type="submit" // Use 'submit' for form submission
             >
               {isSignUp ? "Sign Up" : "Login"}
             </Button>
